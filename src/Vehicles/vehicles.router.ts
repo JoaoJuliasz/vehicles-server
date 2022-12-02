@@ -10,6 +10,8 @@ export default class VehiclesRouter implements ICommand<any> {
     execute(): express.Router {
         const vehiclesRouter = express.Router()
         vehiclesRouter.get('/', this.vehiclesController.httpGetVehicles)
+        vehiclesRouter.post('/', this.vehiclesController.httpCreateNewVehicle)
+
         return vehiclesRouter
     }
 
