@@ -3,22 +3,26 @@ import { Vehicle } from "../types/types";
 
 import vehicleDatabase from '../vehicles.mongo';
 
-export default class GetVehicles implements ICommand<any> {
+export default class GetVehicles implements ICommand<Vehicle[] | {}> {
+
+    constructor(private filter?: string) { }
 
     async execute() {
-        // const vehicles: Vehicle[] = [{
-        //     veiculo: 'teste',
-        //     marca: 'testada',
-        //     ano: 123,
-        //     descricao: 'um belo carro',
-        //     vendido: true,
-        //     created: new Date(),
-        //     updated: new Date(),
-        // }]
-        return await vehicleDatabase
-            .find({}, { '__v': 0 })
-            .sort('created')
 
+        const filter =
+            this.filter ?
+                {
+                    veiculo: {
+                        $regex: this.filter
+                    }
+                }
+                : {}
+
+        return await vehicleDatabase
+            .find(filter
+                , { '__v': 0 }
+            )
+            .sort('created')
     }
 
 }

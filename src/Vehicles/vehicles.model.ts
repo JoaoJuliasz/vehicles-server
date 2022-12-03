@@ -1,4 +1,5 @@
 import CheckIfVehicleExists from "./CheckIfVehicleExists/CheckIfVehicleExists";
+import ExistsVehicleWithId from "./ExistsVehicleWithId/ExistsVehicleWithId";
 import GetVehicles from "./GetVehicles/GetVehicles";
 import SaveVehicle from "./SaveVehicle/SaveVehicle";
 import { BodyVehicle, Vehicle } from "./types/types";
@@ -7,18 +8,26 @@ import VehicleEnricher from "./VehicleEnricher/VehicleEnricher";
 
 export default class VehiclesModel {
 
-    async getVehicles(): Promise<any> {
-        // getVehicles(): Vehicle[] {
-        return await new GetVehicles().execute()
+    async getVehicles(): Promise<Vehicle[]> {
+        const vehicles = await new GetVehicles().execute()
+        return vehicles
+    }
+
+    async getFilterdVehicles(filter: string) {
+        const filteredVehicles = await new GetVehicles(filter).execute()
+        return filteredVehicles
     }
 
     async checkIfVehicleExists(vehicle: BodyVehicle): Promise<boolean> {
-        console.warn(vehicle)
         return new CheckIfVehicleExists(vehicle, await this.getVehicles()).execute()
     }
 
-    saveVehicle(vehicle: BodyVehicle) {
-        return new SaveVehicle(vehicle).execute()
+    async existsVehicleWithId(vehicleId: string): Promise<Vehicle | null> {
+        return await new ExistsVehicleWithId(vehicleId).execute()
+    }
+
+    async saveVehicle(vehicle: BodyVehicle) {
+        return await new SaveVehicle(vehicle).execute()
     }
 
     async addNewVehicle(vehicle: BodyVehicle) {

@@ -6,9 +6,9 @@ export default class CheckIfVehicleExists implements ICommand<boolean> {
     constructor(private newVehicle: BodyVehicle, private vehicles: Vehicle[]) { }
 
     execute() {
-        // const vehicleExists = this.vehicles.findIndex(vehicle => vehicle.veiculo === this.newVehicle.veiculo
-        //     && vehicle.marca === this.newVehicle.marca && vehicle.ano === this.newVehicle.ano)
-        return false
+        const vehicleExists = this.vehicles.findIndex(vehicle => vehicle.veiculo === this.newVehicle.veiculo
+            && vehicle.marca === this.newVehicle.marca && vehicle.ano === this.newVehicle.ano)
+        return vehicleExists > -1
     }
 
 }
