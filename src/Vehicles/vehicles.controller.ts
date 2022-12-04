@@ -10,6 +10,7 @@ export default class VehicleController {
         this.httpGetVehicles = this.httpGetVehicles.bind(this)
         this.httpGetVehiclesByFilter = this.httpGetVehiclesByFilter.bind(this)
         this.httpCreateNewVehicle = this.httpCreateNewVehicle.bind(this)
+        this.httpRemoveVehicle = this.httpRemoveVehicle.bind(this)
     }
 
     async httpGetVehicles(req: Request, res: Response) {
@@ -50,6 +51,21 @@ export default class VehicleController {
         }
         await this.vehicleModel.addNewVehicle(vehicle)
         return res.status(200).json(vehicle)
+    }
+
+    async httpRemoveVehicle(req: Request, res: Response) {
+        const vehicleId = req.params._id
+        const foundVehicle = await this.vehicleModel.existsVehicleWithId(vehicleId)
+        if (!foundVehicle) {
+            return res.status(404).json({
+                error: "Vehicle with this id not exists!"
+            })
+        }
+        await this.vehicleModel.removeVehicle(vehicleId)
+        return res.status(200).json({
+            message: 'Vehicle deleted!'
+        })
+
     }
 
 }

@@ -11,4 +11,4 @@ export default class CheckIfVehicleExists implements ICommand<boolean> {
         return vehicleExists > -1
     }
 
-}
+} 

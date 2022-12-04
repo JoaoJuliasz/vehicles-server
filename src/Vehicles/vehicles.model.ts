@@ -1,6 +1,7 @@
 import CheckIfVehicleExists from "./CheckIfVehicleExists/CheckIfVehicleExists";
 import ExistsVehicleWithId from "./ExistsVehicleWithId/ExistsVehicleWithId";
 import GetVehicles from "./GetVehicles/GetVehicles";
+import RemoveVehicle from "./RemoveVehicle/RemoveVehicle";
 import SaveVehicle from "./SaveVehicle/SaveVehicle";
 import { BodyVehicle, Vehicle } from "./types/types";
 import VehicleEnricher from "./VehicleEnricher/VehicleEnricher";
@@ -33,6 +34,11 @@ export default class VehiclesModel {
     async addNewVehicle(vehicle: BodyVehicle) {
         const newVehicle = new VehicleEnricher(vehicle).execute()
         await this.saveVehicle(newVehicle)
+    }
+
+    async removeVehicle(vehicleId: string) {
+        const teste = await new RemoveVehicle(vehicleId).execute()
+        console.warn(teste)
     }
 
 }
