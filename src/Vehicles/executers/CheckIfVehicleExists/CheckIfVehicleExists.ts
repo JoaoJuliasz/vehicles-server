@@ -1,5 +1,5 @@
-import ICommand from "../types/ICommand";
-import { BodyVehicle, Vehicle } from "../types/types";
+import ICommand from "../../types/ICommand";
+import { BodyVehicle, Vehicle } from "../../types/types";
 
 export default class CheckIfVehicleExists implements ICommand<boolean> {
 

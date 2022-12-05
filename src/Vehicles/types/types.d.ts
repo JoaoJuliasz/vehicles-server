@@ -12,3 +12,7 @@ export type Vehicle = {
     created: Date
     updated: Date
 } & BodyVehicle
+
+export type UpdateVehicleValues = {
+    [key in keyof Vehicle]: Vehicle[keyof Vehicle]
+}

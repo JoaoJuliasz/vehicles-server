@@ -1,6 +1,6 @@
-import ICommand from "../types/ICommand";
-import { BodyVehicle } from "../types/types";
-import vehiclesDatabase from '../vehicles.mongo'
+import ICommand from "../../types/ICommand";
+import { BodyVehicle } from "../../types/types";
+import vehiclesDatabase from '../../vehicles.mongo'
 
 export default class SaveVehicle implements ICommand<void> {
 

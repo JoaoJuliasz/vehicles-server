@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import ICommand from "../types/ICommand";
-import { BodyVehicle, Vehicle } from "../types/types";
+import ICommand from "../../types/ICommand";
+import { BodyVehicle, Vehicle } from "../../types/types";
 
 export default class VehicleEnricher implements ICommand<Vehicle> {
 

@@ -1,7 +1,7 @@
-import ICommand from "../types/ICommand";
-import { Vehicle } from "../types/types";
+import ICommand from "../../types/ICommand";
+import { Vehicle } from "../../types/types";
 
-import vehicleDatabase from '../vehicles.mongo';
+import vehicleDatabase from '../../vehicles.mongo';
 
 export default class GetVehicles implements ICommand<Vehicle[] | {}> {
 

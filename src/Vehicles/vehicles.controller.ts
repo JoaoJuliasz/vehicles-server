@@ -1,5 +1,11 @@
 import VehiclesModel from "./vehicles.model";
 import { Request, Response } from 'express'
+import HttpGetVehicles from "./ControllerFunctions/HttpGetVehicles";
+import HttpGetVehicle from "./ControllerFunctions/HttpGetVehicle";
+import HttpGetVehicleByFilter from "./ControllerFunctions/HttpGetVehiclesByFilter";
+import HttpCreateNewVehicle from "./ControllerFunctions/HttpCreateNewVehicle";
+import HttpUpdateVehicleValues from "./ControllerFunctions/HttpUpdateVehicleValues";
+import HttpRemoveVehicle from "./ControllerFunctions/HttpRemoveVehicle";
 
 export default class VehicleController {
 
@@ -10,62 +16,47 @@ export default class VehicleController {
         this.httpGetVehicles = this.httpGetVehicles.bind(this)
         this.httpGetVehiclesByFilter = this.httpGetVehiclesByFilter.bind(this)
         this.httpCreateNewVehicle = this.httpCreateNewVehicle.bind(this)
+        // this.httpUpdateVehicle = this.httpUpdateVehicle.bind(this)
+        this.httpUpdateVehicleValues = this.httpUpdateVehicleValues.bind(this)
         this.httpRemoveVehicle = this.httpRemoveVehicle.bind(this)
     }
 
     async httpGetVehicles(req: Request, res: Response) {
-        res.status(200).json(await this.vehicleModel.getVehicles())
+        await new HttpGetVehicles(res, this.vehicleModel).execute()
     }
 
     async httpGetVehicle(req: Request, res: Response) {
-        const vehicleId = req.params._id
-        const foundVehicle = await this.vehicleModel.existsVehicleWithId(vehicleId)
-        if (!foundVehicle) {
-            return res.status(404).json({
-                error: 'Vehicle not found!'
-            })
-        }
-
-        return res.status(200).json(foundVehicle)
+        await new HttpGetVehicle({ req, res }, this.vehicleModel).execute()
     }
 
     async httpGetVehiclesByFilter(req: Request<{}, {}, {}, { q: string }>, res: Response) {
-        const { query } = req
-        const filterValue = query.q
-        const foundVehicles = await this.vehicleModel.getFilterdVehicles(filterValue)
-        if (foundVehicles.length === 0) {
-            return res.status(404).json({
-                message: "No vehicles found!"
-            })
-        }
-
-        return res.status(200).json(foundVehicles)
+        await new HttpGetVehicleByFilter({ req, res }, this.vehicleModel).execute()
     }
 
     async httpCreateNewVehicle(req: Request, res: Response) {
-        const vehicle = req.body
-        if (await this.vehicleModel.checkIfVehicleExists(vehicle)) {
-            return res.status(400).json({
-                error: 'Vehicle with these values already exists!'
-            })
-        }
-        await this.vehicleModel.addNewVehicle(vehicle)
-        return res.status(200).json(vehicle)
+        await new HttpCreateNewVehicle({ req, res }, this.vehicleModel).execute()
     }
 
-    async httpRemoveVehicle(req: Request, res: Response) {
-        const vehicleId = req.params._id
-        const foundVehicle = await this.vehicleModel.existsVehicleWithId(vehicleId)
-        if (!foundVehicle) {
-            return res.status(404).json({
-                error: "Vehicle with this id not exists!"
-            })
-        }
-        await this.vehicleModel.removeVehicle(vehicleId)
-        return res.status(200).json({
-            message: 'Vehicle deleted!'
-        })
+    async httpUpdateVehicleValues(req: Request, res: Response) {
+        await new HttpUpdateVehicleValues({ req, res }, this.vehicleModel)
+    }
 
+    // async httpUpdateVehicle(req: Request, res: Response) {
+    //     const vehicleId = req.params._id
+    //     const foundVehicle = await this.vehicleModel.existsVehicleWithId(vehicleId)
+    //     const valuesToUpdate = req.body
+    //     if (!foundVehicle) {
+    //         return res.status(404).json({
+    //             error: "Vehicle with this id not exists!"
+    //         })
+    //     }
+    //     const updatedVehicle = await this.vehicleModel.updateVehicle(vehicleId, valuesToUpdate)
+    //     return res.status(200).json(updatedVehicle)
+
+    // }
+
+    async httpRemoveVehicle(req: Request, res: Response) {
+        await new HttpRemoveVehicle({ req, res }, this.vehicleModel).execute()
     }
 
 }
