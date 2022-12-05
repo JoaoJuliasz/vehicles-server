@@ -11,7 +11,6 @@ export default class UpdateVehicle implements ICommand<Promise<Vehicle>> {
         const update = Object.assign(this.valuesToUpdate, {
             updated: new Date()
         })
-        console.log(update)
         await vehicleDatabase.findOneAndUpdate({ _id: this.vehicleId }, update, { upsert: true, new: true, fields: '-__v' }, (err, doc) => {
             if (err) {
                 console.log(`An error occurred ${err}`)

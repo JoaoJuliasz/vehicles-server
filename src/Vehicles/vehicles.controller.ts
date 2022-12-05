@@ -38,7 +38,7 @@ export default class VehicleController {
     }
 
     async httpUpdateVehicleValues(req: Request, res: Response) {
-        await new HttpUpdateVehicleValues({ req, res }, this.vehicleModel)
+        await new HttpUpdateVehicleValues({ req, res }, this.vehicleModel).execute()
     }
 
     // async httpUpdateVehicle(req: Request, res: Response) {

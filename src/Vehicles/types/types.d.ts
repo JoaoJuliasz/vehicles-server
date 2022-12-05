@@ -9,8 +9,8 @@ export type BodyVehicle = {
 
 
 export type Vehicle = {
-    created: Date
-    updated: Date
+    created: Date | string
+    updated: Date | string
 } & BodyVehicle
 
 export type UpdateVehicleValues = {
