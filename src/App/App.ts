@@ -8,6 +8,7 @@ export default class App {
         const app = express()
 
         app.use(express.json())
+        app.use(express.urlencoded({ extended: false }))
 
         app.use('/vehicles', new VehiclesRouter().execute())
 

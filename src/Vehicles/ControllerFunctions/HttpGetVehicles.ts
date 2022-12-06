@@ -4,7 +4,9 @@ import VehiclesModel from "../vehicles.model";
 
 export default class HttpGetVehicles implements ICommand<void> {
 
-    constructor(private res: Response, private vehicleModel: VehiclesModel) { }
+    private vehicleModel: VehiclesModel = new VehiclesModel()
+
+    constructor(private res: Response) { }
 
     async execute() {
         this.res.status(200).json(await this.vehicleModel.getVehicles())

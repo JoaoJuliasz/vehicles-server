@@ -4,7 +4,9 @@ import ICommand from "../types/ICommand";
 
 export default class HttpRemoveVehicle implements ICommand<void> {
 
-    constructor(private params: { req: Request, res: Response }, private vehicleModel: VehiclesModel) { }
+    private vehicleModel: VehiclesModel = new VehiclesModel()
+
+    constructor(private params: { req: Request, res: Response }) { }
 
     async execute() {
         const { req, res } = this.params

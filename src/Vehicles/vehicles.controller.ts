@@ -1,4 +1,3 @@
-import VehiclesModel from "./vehicles.model";
 import { Request, Response } from 'express'
 import HttpGetVehicles from "./ControllerFunctions/HttpGetVehicles";
 import HttpGetVehicle from "./ControllerFunctions/HttpGetVehicle";
@@ -9,36 +8,26 @@ import HttpRemoveVehicle from "./ControllerFunctions/HttpRemoveVehicle";
 
 export default class VehicleController {
 
-    protected vehicleModel: VehiclesModel = new VehiclesModel()
-
-    constructor() {
-        this.httpGetVehicle = this.httpGetVehicle.bind(this)
-        this.httpGetVehicles = this.httpGetVehicles.bind(this)
-        this.httpGetVehiclesByFilter = this.httpGetVehiclesByFilter.bind(this)
-        this.httpCreateNewVehicle = this.httpCreateNewVehicle.bind(this)
-        // this.httpUpdateVehicle = this.httpUpdateVehicle.bind(this)
-        this.httpUpdateVehicleValues = this.httpUpdateVehicleValues.bind(this)
-        this.httpRemoveVehicle = this.httpRemoveVehicle.bind(this)
-    }
+    constructor() { }
 
     async httpGetVehicles(req: Request, res: Response) {
-        await new HttpGetVehicles(res, this.vehicleModel).execute()
+        await new HttpGetVehicles(res).execute()
     }
 
     async httpGetVehicle(req: Request, res: Response) {
-        await new HttpGetVehicle({ req, res }, this.vehicleModel).execute()
+        await new HttpGetVehicle({ req, res }).execute()
     }
 
     async httpGetVehiclesByFilter(req: Request<{}, {}, {}, { q: string }>, res: Response) {
-        await new HttpGetVehicleByFilter({ req, res }, this.vehicleModel).execute()
+        await new HttpGetVehicleByFilter({ req, res }).execute()
     }
 
     async httpCreateNewVehicle(req: Request, res: Response) {
-        await new HttpCreateNewVehicle({ req, res }, this.vehicleModel).execute()
+        await new HttpCreateNewVehicle({ req, res }).execute()
     }
 
     async httpUpdateVehicleValues(req: Request, res: Response) {
-        await new HttpUpdateVehicleValues({ req, res }, this.vehicleModel).execute()
+        await new HttpUpdateVehicleValues({ req, res }).execute()
     }
 
     // async httpUpdateVehicle(req: Request, res: Response) {
@@ -56,7 +45,7 @@ export default class VehicleController {
     // }
 
     async httpRemoveVehicle(req: Request, res: Response) {
-        await new HttpRemoveVehicle({ req, res }, this.vehicleModel).execute()
+        await new HttpRemoveVehicle({ req, res }).execute()
     }
 
 }

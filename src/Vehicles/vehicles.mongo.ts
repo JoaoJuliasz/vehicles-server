@@ -3,23 +3,23 @@ import { Schema, model } from 'mongoose'
 const vehiclesSchema = new Schema({
     veiculo: {
         type: String,
-        required: true
+        required: [true, "Veiculo is required!"],
     },
     marca: {
         type: String,
-        required: true
+        required: [true, "Marca is required!"],
     },
     ano: {
         type: Number,
-        required: true
+        required: [true, "Ano is required!"],
     },
     descricao: {
         type: String,
-        required: true
+        required: [true, "Descricao is required"],
     },
     vendido: {
         type: Boolean,
-        required: true
+        required: [true, "Vendido is required"],
     },
     _id: {
         type: String,
@@ -27,7 +27,7 @@ const vehiclesSchema = new Schema({
     },
     created: {
         type: Date,
-        required: true
+        required: [true, "Created is required!"]
     },
     updated: {
         type: Date,
@@ -35,4 +35,6 @@ const vehiclesSchema = new Schema({
     }
 })
 
-export default model('Vehicle', vehiclesSchema)
+const vehicleModel = model('Vehicle', vehiclesSchema)
+
+export default vehicleModel

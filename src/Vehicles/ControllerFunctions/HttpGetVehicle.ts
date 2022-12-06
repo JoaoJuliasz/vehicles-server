@@ -4,7 +4,9 @@ import VehiclesModel from "../vehicles.model";
 
 export default class HttpGetVehicle implements ICommand<void> {
 
-    constructor(private params: { req: Request, res: Response }, private vehicleModel: VehiclesModel) { }
+    private vehicleModel: VehiclesModel = new VehiclesModel()
+
+    constructor(private params: { req: Request, res: Response }) { }
 
     async execute() {
         const { req, res } = this.params

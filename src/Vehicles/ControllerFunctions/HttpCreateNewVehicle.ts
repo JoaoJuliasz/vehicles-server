@@ -4,8 +4,9 @@ import ICommand from "../types/ICommand";
 
 export default class HttpCreateNewVehicle implements ICommand<void> {
 
-    constructor(private params: { req: Request, res: Response }, private vehicleModel: VehiclesModel) { }
+    private vehicleModel: VehiclesModel = new VehiclesModel()
 
+    constructor(private params: { req: Request, res: Response }) { }
 
     async execute() {
         const { req, res } = this.params
@@ -16,8 +17,13 @@ export default class HttpCreateNewVehicle implements ICommand<void> {
                 error: 'Vehicle with these values already exists!'
             })
         }
-        await this.vehicleModel.addNewVehicle(vehicle)
-        return res.status(201).json(vehicle)
+        const vehicleStatus = await this.vehicleModel.addNewVehicle(vehicle)
+        if (typeof vehicleStatus === "string") {
+            return res.status(400).send({
+                err: vehicleStatus
+            })
+        }
+        return res.status(201).json(vehicleStatus)
     }
 
 }

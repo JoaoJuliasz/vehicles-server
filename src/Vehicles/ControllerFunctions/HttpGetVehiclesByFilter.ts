@@ -4,7 +4,9 @@ import ICommand from "../types/ICommand";
 
 export default class HttpGetVehicleByFilter implements ICommand<void> {
 
-    constructor(private params: { req: Request<{}, {}, {}, { q: string }>, res: Response }, private vehicleModel: VehiclesModel) { }
+    private vehicleModel: VehiclesModel = new VehiclesModel()
+
+    constructor(private params: { req: Request<{}, {}, {}, { q: string }>, res: Response }) { }
 
     async execute() {
         const { req, res } = this.params

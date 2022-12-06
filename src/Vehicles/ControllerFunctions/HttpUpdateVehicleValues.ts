@@ -4,7 +4,9 @@ import ICommand from "../types/ICommand";
 
 export default class HttpUpdateVehicleValues implements ICommand<void> {
 
-    constructor(private params: { req: Request, res: Response }, private vehicleModel: VehiclesModel) { }
+    private vehicleModel: VehiclesModel = new VehiclesModel()
+
+    constructor(private params: { req: Request, res: Response }) { }
 
     async execute() {
         const { req, res } = this.params
@@ -16,18 +18,13 @@ export default class HttpUpdateVehicleValues implements ICommand<void> {
                 error: "Vehicle with this id not exists!"
             })
         }
-        if (!this.vehicleModel.validateVehicleNotEmpty(vehicle)) {
-            return res.status(400).json({
-                err: 'Missing vehicle property!'
+        const updateStatus = await this.vehicleModel.updateVehicle(vehicleId, vehicle)
+        if (typeof updateStatus === "string") {
+            return res.status(400).send({
+                err: updateStatus
             })
         }
-        if (!this.vehicleModel.validateVehicleTypes(vehicle)) {
-            return res.status(400).json({
-                err: 'Invalid vehicle types!'
-            })
-        }
-        const updatedVehicle = await this.vehicleModel.updateVehicle(vehicleId, vehicle)
-        return res.status(200).json(updatedVehicle)
+        return res.status(200).json(updateStatus)
     }
 
 }

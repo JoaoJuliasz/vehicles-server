@@ -1,17 +1,16 @@
 import ICommand from "../../types/ICommand";
-import { BodyVehicle } from "../../types/types";
+import { BodyVehicle, Vehicle } from "../../types/types";
 import vehiclesDatabase from '../../vehicles.mongo'
 
-export default class SaveVehicle implements ICommand<void> {
+export default class SaveVehicle implements ICommand<Promise<Vehicle | string>>{
 
     constructor(private vehicle: BodyVehicle) { }
 
     async execute() {
-        await vehiclesDatabase.findOneAndUpdate({
-            _id: this.vehicle._id
-        }, this.vehicle, {
-            upsert: true
-        })
+        const vehicle = new vehiclesDatabase(this.vehicle)
+        return vehicle.save()
+            .then((res) => res)
+            .catch(err => err.message)
     }
 
 }
