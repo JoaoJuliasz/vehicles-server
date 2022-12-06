@@ -1,10 +1,11 @@
-import CheckIfVehicleExists from "./executers/CheckIfVehicleExists/CheckIfVehicleExists";
-import ExistsVehicleWithId from "./executers/ExistsVehicleWithId/ExistsVehicleWithId";
-import GetVehicles from "./executers/GetVehicles/GetVehicles";
-import RemoveVehicle from "./executers/RemoveVehicle/RemoveVehicle";
-import SaveVehicle from "./executers/SaveVehicle/SaveVehicle";
-import UpdateValidatedVehicle from "./executers/UpdateValidatedVehicle/UpdateValidatedVehicle";
-import VehicleEnricher from "./executers/VehicleEnricher/VehicleEnricher";
+import CheckIfVehicleExists from "./executors/CheckIfVehicleExists/CheckIfVehicleExists";
+import ExistsVehicleWithId from "./executors/ExistsVehicleWithId/ExistsVehicleWithId";
+import GetVehicles from "./executors/GetVehicles/GetVehicles";
+import RemoveVehicle from "./executors/RemoveVehicle/RemoveVehicle";
+import SaveVehicle from "./executors/SaveVehicle/SaveVehicle";
+import UpdateValidatedVehicle from "./executors/UpdateValidatedVehicle/UpdateValidatedVehicle";
+import UpdateVehicle from "./executors/UpdateVehicle/UpdateVehicle";
+import VehicleEnricher from "./executors/VehicleEnricher/VehicleEnricher";
 
 import { BodyVehicle, UpdateVehicleValues, Vehicle } from "./types/types";
 
@@ -38,8 +39,13 @@ export default class VehiclesModel {
         return await this.saveVehicle(newVehicle)
     }
 
-    async updateVehicle(vehicleId: string, valuesToUpdate: UpdateVehicleValues) {
+    async updateVehicleValues(vehicleId: string, valuesToUpdate: UpdateVehicleValues) {
         const updatedReturn = await new UpdateValidatedVehicle(vehicleId, valuesToUpdate).execute()
+        return updatedReturn
+    }
+
+    async updateVehicle(vehicleId: string, valuesToUpdate: UpdateVehicleValues) {
+        const updatedReturn = await new UpdateVehicle(vehicleId, valuesToUpdate).execute()
         return updatedReturn
     }
 

@@ -5,6 +5,7 @@ import HttpGetVehicleByFilter from "./ControllerFunctions/HttpGetVehiclesByFilte
 import HttpCreateNewVehicle from "./ControllerFunctions/HttpCreateNewVehicle";
 import HttpUpdateVehicleValues from "./ControllerFunctions/HttpUpdateVehicleValues";
 import HttpRemoveVehicle from "./ControllerFunctions/HttpRemoveVehicle";
+import HttpUpdateVehicle from './ControllerFunctions/HttpUpdateVehicle';
 
 export default class VehicleController {
 
@@ -30,19 +31,9 @@ export default class VehicleController {
         await new HttpUpdateVehicleValues({ req, res }).execute()
     }
 
-    // async httpUpdateVehicle(req: Request, res: Response) {
-    //     const vehicleId = req.params._id
-    //     const foundVehicle = await this.vehicleModel.existsVehicleWithId(vehicleId)
-    //     const valuesToUpdate = req.body
-    //     if (!foundVehicle) {
-    //         return res.status(404).json({
-    //             error: "Vehicle with this id not exists!"
-    //         })
-    //     }
-    //     const updatedVehicle = await this.vehicleModel.updateVehicle(vehicleId, valuesToUpdate)
-    //     return res.status(200).json(updatedVehicle)
-
-    // }
+    async httpUpdateVehicle(req: Request, res: Response) {
+       await new HttpUpdateVehicle({req, res}).execute()
+    }
 
     async httpRemoveVehicle(req: Request, res: Response) {
         await new HttpRemoveVehicle({ req, res }).execute()
