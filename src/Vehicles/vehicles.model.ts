@@ -3,7 +3,7 @@ import ExistsVehicleWithId from "./executers/ExistsVehicleWithId/ExistsVehicleWi
 import GetVehicles from "./executers/GetVehicles/GetVehicles";
 import RemoveVehicle from "./executers/RemoveVehicle/RemoveVehicle";
 import SaveVehicle from "./executers/SaveVehicle/SaveVehicle";
-import UpdateVehicle from "./executers/UpdateVehicle/UpdateVehicle";
+import UpdateValidatedVehicle from "./executers/UpdateValidatedVehicle/UpdateValidatedVehicle";
 import VehicleEnricher from "./executers/VehicleEnricher/VehicleEnricher";
 
 import { BodyVehicle, UpdateVehicleValues, Vehicle } from "./types/types";
@@ -39,7 +39,8 @@ export default class VehiclesModel {
     }
 
     async updateVehicle(vehicleId: string, valuesToUpdate: UpdateVehicleValues) {
-        return new UpdateVehicle(vehicleId, valuesToUpdate).execute()
+        const updatedReturn = await new UpdateValidatedVehicle(vehicleId, valuesToUpdate).execute()
+        return updatedReturn
     }
 
     async removeVehicle(vehicleId: string) {
