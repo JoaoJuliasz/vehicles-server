@@ -14,7 +14,7 @@ export default class HttpGetVehicleByFilter implements ICommand<void> {
         const filterValue = query.q
         const foundVehicles = await this.vehicleModel.getFilterdVehicles(filterValue)
         if (foundVehicles.length === 0) {
-            return res.status(404).json({
+            return res.status(200).json({
                 message: "No vehicles found!"
             })
         }

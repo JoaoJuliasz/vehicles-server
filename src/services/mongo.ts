@@ -17,6 +17,6 @@ export async function mongoConnection() {
     await mongoose.connect(MONGO_URL)
 }
 
-export async function mongoDesconnection() {
+export async function mongoDisconnection() {
     await mongoose.disconnect()
 }
