@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "start": "ts-node src/index.ts",
-    "watch": "npx nodemon src/index.ts"
+    "watch": "npx nodemon src/index.ts",
+    "cluster": "pm2 start src/index.ts -i max"
   },
   "keywords": [],
   "author": "",
