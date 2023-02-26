@@ -20,7 +20,7 @@ export default class GetVehicles implements ICommand<Vehicle[] | {}> {
 
         return await vehicleDatabase
             .find(filter
-                , { '__v': 0 }
+                , { '__v': 0,  created: 0, vendido: 0, updated: 0, descricao: 0}
             )
             .sort('created')
     }
