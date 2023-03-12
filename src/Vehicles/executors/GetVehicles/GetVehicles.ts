@@ -13,7 +13,7 @@ export default class GetVehicles implements ICommand<Vehicle[] | {}> {
             this.filter ?
                 {
                     veiculo: {
-                        $regex: this.filter
+                        $regex: new RegExp(this.filter, "i")
                     }
                 }
                 : {}
